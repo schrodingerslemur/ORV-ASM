@@ -47,4 +47,7 @@ def main(
         logger.error(f"An error occurred during assembly: {e}")
     
     return
+
+if __name__ == "__main__":  
+    app()
     
