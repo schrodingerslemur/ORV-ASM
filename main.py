@@ -8,7 +8,7 @@ app = typer.Typer(add_completion=False)
 @app.command()
 def main(
     file_name: Annotated[str, typer.argument(help="Name of the file to assemble")]
-):
+) - > None:
     """
     Assembles the specified file.
     """
@@ -34,4 +34,17 @@ def main(
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return
+    
+    # Assemble file
+    logger.info("Assembling file")
+    try:
+        assembled_content = assemble(content)
+        output_file_name = file_name.replace('.asm', '.list')
+        with open(output_file_name, 'w') as output_file:
+            output_file.write(assembled_content)
+        logger.info(f"Assembly complete. Output written to {output_file_name}")
+    except Exception as e:
+        logger.error(f"An error occurred during assembly: {e}")
+    
+    return
     
