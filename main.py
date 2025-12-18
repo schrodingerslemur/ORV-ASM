@@ -12,7 +12,10 @@ def main(
     file_name: Annotated[str, typer.argument(help="Name of the file to assemble")]
 ) -> None:
     """
-    Assembles the specified file.
+    This functions takes in a '.asm' file name as input and writes the assembled machine code into a file of same name but with extension 'list'
+    
+    :param file_name: '.asm' file path to be assembled
+    :type file_name: str
     """
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
