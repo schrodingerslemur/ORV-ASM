@@ -3,6 +3,8 @@ from typing import Annotated
 
 import logging
 
+from assemble import assemble
+
 app = typer.Typer(add_completion=False)
 
 @app.command()
