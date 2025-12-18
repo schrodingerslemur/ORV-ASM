@@ -20,15 +20,16 @@ def main(
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    logger.info(f"Starting assembly for file: {file_name}")
+    logger.info(f"Starting assembly for file: {file_name}...")
 
     # Check extension
-    logger.info("Checking file extension")
+    logger.info("Checking file extension...")
     if not file_name.endswith('.asm'):
         logger.error("File must have a .asm extension")
         return
     
     # Open file and check it exists
+    logger.info("Checking file exists...")
     try:
         with open(file_name, 'r') as file:
             content = file.read()
@@ -41,7 +42,7 @@ def main(
         return
     
     # Assemble file
-    logger.info("Assembling file")
+    logger.info("Assembling file...")
     try:
         assembled_content = assemble(content)
         output_file_name = file_name.replace('.asm', '.list')
