@@ -1,7 +1,7 @@
 # Instruction set architecture for ORV
 Based on the base instructions on RISCV-32I
 
-Types of instructions:
+## Types of instructions:
 1. R-type: All register-only integer computation instructions
 2. I-type: All register-immediate integer computation instructions
 3. S-type: All store instructions
@@ -9,8 +9,8 @@ Types of instructions:
 5. U-type: Special instructions (e.g. LUI, AUIPC)
 6. J-type: All jump instructions
 
-ORV ISA: 
-R-type:
+## ORV ISA: 
+### R-type:
 1. add
 Format: `add rd, rs1, rs2`
 Description: `rd = rs1 + rs2`
@@ -51,7 +51,7 @@ Description: `rd = rs1 | rs2`
 Format: `and rd, rs1, rs2`
 Description: `rd = rs1 & rs2`
 
-I-type:
+### I-type:
 1. lui
 Format: `lui rd, imm`
 Description: `rd = imm[31:12] << 12`
@@ -92,7 +92,7 @@ Description: `rd = rs1 >> shamt (logical)`
 Format: `srai rd, rs1, shamt`
 Description: `rd = rs1 >> shamt (arithmetic)`
 
-S-type:
+### S-type:
 1. sb
 Format: `sb rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[7:0]`
@@ -125,7 +125,7 @@ Description: `rd = zero-extend(Mem[rs1 + offset][7:0])`
 Format: `lhu rd, offset(rs1)`
 Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
 
-B-type:
+### B-type:
 1. beq
 Format: `beq rs1, rs2, offset`
 Description: `if (rs1 == rs2) pc += offset`
@@ -150,7 +150,7 @@ Description: `if (rs1 < rs2) pc += offset` (unsigned)
 Format: `bgeu rs1, rs2, offset`
 Description: `if (rs1 >= rs2) pc += offset` (unsigned)
 
-U-type:
+### U-type:
 1. lui
 Format: `lui rd, imm`
 Description: `rd = imm[31:12] << 12`
@@ -159,7 +159,7 @@ Description: `rd = imm[31:12] << 12`
 Format: `auipc rd, imm`
 Description: `rd = pc + (imm[31:12] << 12)`
 
-J-type:
+### J-type:
 1. jal
 Format: `jal rd, offset`
 Description: `rd = pc + 4; pc += offset`
@@ -169,62 +169,12 @@ Format: `jalr rd, rs1, offset`
 Description: `temp = pc + 4; pc = (rs1 + offset) & ~1; rd = temp`
 
 
+## For reference:
 
-
+### Full RV32I instruction list: 
 1. lui
-
 2. auipc
-
 3. addi
-
-4. slti
-5. sltiu
-6. xori
-7. ori
-8. andi
-9. slli
-10. srli
-11. srai
-12. add
-13. sub
-14. sll
-15. slt
-16. sltu
-17. xor
-18. srl
-19. sra
-20. or
-21. and
-22. lb
-23. lh
-24. lw
-25. lbu
-26. lhu
-27. sb
-28. sh
-29. sw
-30. jal
-31. jalr
-32. beq
-33. bne
-34. blt
-35. bge
-36. bltu
-37. bgeu
-
-
-Full RV32I instruction list: 
-1. lui
-Format: `lui rd, imm`
-Type: U-type
-Description: Moves top 20 bits of imm and 12 low bits with zeros into rd.
-
-2. auipc
-Format: `auipc rd, imm`
-Type: 
-
-3. addi
-
 4. slti
 5. sltiu
 6. xori
