@@ -10,6 +10,11 @@ Based on the base instructions on RISCV-32I
 6. J-type: All jump instructions
 
 ## ORV ISA: 
+### Pseudo-instructions:
+1. .equ
+2. .org
+3. .dw
+
 ### R-type:
 1. add
 Format: `add rd, rs1, rs2`
