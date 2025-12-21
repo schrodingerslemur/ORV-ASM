@@ -3,21 +3,177 @@ Based on the base instructions on RISCV-32I
 
 Types of instructions:
 1. R-type: All register-only integer computation instructions
-2. I-type: All register-immediate integer computatio instructions
+2. I-type: All register-immediate integer computation instructions
 3. S-type: All store instructions
 4. B-type: All branch instructions
 5. U-type: Special instructions (e.g. LUI, AUIPC)
 6. J-type: All jump instructions
 
 ORV ISA: 
+R-type:
+1. add
+Format: `add rd, rs1, rs2`
+Description: `rd = rs1 + rs2`
+
+2. sub
+Format: `sub rd, rs1, rs2`
+Description: `rd = rs1 - rs2`
+
+3. sll
+Format: `sll rd, rs1, rs2`
+Description: `rd = rs1 << rs2`
+
+4. slt
+Format: `slt rd, rs1, rs2`
+Description: `rd = rs1 < rs2 ? 1 : 0`
+
+5. sltu
+Format: `sltu rd, rs1, rs2`
+Description: `rd = rs1 < rs2 (unsigned) ? 1 : 0`
+
+6. xor
+Format: `xor rd, rs1, rs2`
+Description: `rd = rs1 ^ rs2`
+
+7. srl
+Format: `srl rd, rs1, rs2`
+Description: `rd = rs1 >> rs2 (logical)`
+
+8. sra
+Format: `sra rd, rs1, rs2`
+Description: `rd = rs1 >> rs2 (arithmetic)`
+
+9. or
+Format: `or rd, rs1, rs2`
+Description: `rd = rs1 | rs2`
+
+10. and
+Format: `and rd, rs1, rs2`
+Description: `rd = rs1 & rs2`
+
+I-type:
 1. lui
 Format: `lui rd, imm`
-Type: U-type
-Description: Moves top 20 bits of imm and 12 low bits with zeros into rd.
+Description: `rd = imm[31:12] << 12`
+
+2. addi
+Format: `addi rd, rs1, imm`
+Description: `rd = rs1 + imm`
+
+3. slti
+Format: `slti rd, rs1, imm`
+Description: `rd = rs1 < imm ? 1 : 0`
+
+4. sltiu
+Format: `sltiu rd, rs1, imm`
+Description: `rd = rs1 < imm (unsigned) ? 1 : 0`
+
+5. xori
+Format: `xori rd, rs1, imm`
+Description: `rd = rs1 ^ imm`
+
+6. ori
+Format: `ori rd, rs1, imm`
+Description: `rd = rs1 | imm`
+
+7. andi
+Format: `andi rd, rs1, imm`
+Description: `rd = rs1 & imm`
+
+8. slli
+Format: `slli rd, rs1, shamt`
+Description: `rd = rs1 << shamt`
+
+9. srli 
+Format: `srli rd, rs1, shamt`
+Description: `rd = rs1 >> shamt (logical)`
+
+10. srai 
+Format: `srai rd, rs1, shamt`
+Description: `rd = rs1 >> shamt (arithmetic)`
+
+S-type:
+1. sb
+Format: `sb rs2, offset(rs1)`
+Description: `Mem[rs1 + offset] = rs2[7:0]`
+
+2. sh
+Format: `sh rs2, offset(rs1)`
+Description: `Mem[rs1 + offset] = rs2[15:0]`
+
+3. sw
+Format: `sw rs2, offset(rs1)`
+Description: `Mem[rs1 + offset] = rs2[31:0]`
+
+4. lb
+Format: `lb rd, offset(rs1)`
+Description: `rd = sign-extend(Mem[rs1 + offset][7:0])`
+
+5. lh
+Format: `lh rd, offset(rs1)`
+Description: `rd = sign-extend(Mem[rs1 + offset][15:0])`
+
+6. lw
+Format: `lw rd, offset(rs1)`
+Description: `rd = Mem[rs1 + offset][31:0]`
+
+7. lbu
+Format: `lbu rd, offset(rs1)`
+Description: `rd = zero-extend(Mem[rs1 + offset][7:0])`
+
+8. lhu
+Format: `lhu rd, offset(rs1)`
+Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
+
+B-type:
+1. beq
+Format: `beq rs1, rs2, offset`
+Description: `if (rs1 == rs2) pc += offset`
+
+2. bne
+Format: `bne rs1, rs2, offset`
+Description: `if (rs1 != rs2) pc += offset`
+
+3. blt
+Format: `blt rs1, rs2, offset`
+Description: `if (rs1 < rs2) pc += offset`
+
+4. bge
+Format: `bge rs1, rs2, offset`
+Description: `if (rs1 >= rs2) pc += offset`
+
+5. bltu
+Format: `bltu rs1, rs2, offset`
+Description: `if (rs1 < rs2) pc += offset` (unsigned)
+
+6. bgeu
+Format: `bgeu rs1, rs2, offset`
+Description: `if (rs1 >= rs2) pc += offset` (unsigned)
+
+U-type:
+1. lui
+Format: `lui rd, imm`
+Description: `rd = imm[31:12] << 12`
 
 2. auipc
 Format: `auipc rd, imm`
-Type: 
+Description: `rd = pc + (imm[31:12] << 12)`
+
+J-type:
+1. jal
+Format: `jal rd, offset`
+Description: `rd = pc + 4; pc += offset`
+
+2. jalr
+Format: `jalr rd, rs1, offset`
+Description: `temp = pc + 4; pc = (rs1 + offset) & ~1; rd = temp`
+
+
+
+
+1. lui
+
+2. auipc
 
 3. addi
 
