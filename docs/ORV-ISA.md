@@ -8,3 +8,57 @@ Description: Moves top 20 bits of imm and 12 low bits with zeros into rd.
 
 2. auipc
 Format: `auipc rd, imm`
+Type: 
+
+3. addi
+
+4. slti
+5. sltiu
+6. xori
+7. ori
+8. andi
+9. slli
+10. srli
+11. srai
+12. add
+13. sub
+14. sll
+15. slt
+16. sltu
+17. xor
+18. srl
+19. sra
+20. or
+21. and
+22. fence
+23. fence.i
+24. csrrw
+25. csrrs
+26. csrrc
+27. csrrwi
+28. csrrsi
+29. csrrci
+30. ecall
+31. ebreak
+32. uret
+33. sret
+34. mret
+35. wfi
+36. sfence.vma
+37. lb
+38. lh
+39. lw
+40. lbu
+41. lhu
+42. sb
+43. sh
+44. sw
+45. jal
+46. jalr
+47. beq
+48. bne
+49. blt
+50. bge
+51. bltu
+52. bgeu
+
