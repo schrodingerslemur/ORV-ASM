@@ -1,6 +1,15 @@
 # Instruction set architecture for ORV
 Based on RISCV-32I
 
+Types of instructions:
+1. R-type: All register-only integer computation instructions
+2. I-type: All register-immediate integer computatio instructions
+3. S-type: All store instructions
+4. B-type: All branch instructions
+5. U-type: Special instructions (e.g. LUI, AUIPC)
+6. J-type: All jump instructions
+
+Instruction list: 
 1. lui
 Format: `lui rd, imm`
 Type: U-type
