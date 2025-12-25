@@ -1,6 +1,7 @@
 import re
+import sys
 
-from src.constants import opcode, funct_3, funct_7
+from constants import opcode, funct_3, funct_7
 
 def assemble(
         content: str
@@ -25,17 +26,15 @@ def assemble(
 
         # Instructions
         # parse instruction
-        tokens = re.split(r'[,\s()]+', line)
-        instr = tokens[0]
-        args = tokens[1:]
-
-        # opcode
-        if instr not in opcode:
-            raise ValueError(f"Unknown instruction: {instr}")
-        instr_opcode = opcode[instr]
+        match = re.search(r'\s*(\w+)\s+(.*)', line)
+        op = match.group(1)
+        non_op = match.group(2)
 
         # handle different types
         # handle pseudo instructions
         pass
 
     return '\n'.join(assembled_lines)
+
+if __name__ == "__main__":
+    assemble(sys.argv[1])
