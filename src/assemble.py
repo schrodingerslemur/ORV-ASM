@@ -126,13 +126,17 @@ def get_args(
     
 
 def get_imm(
-    imm_str: str
+    imm_str: str,
+    metadata: dict = {}
 ) -> str:
     """Validates an immediate value"""
     try:
         imm = int(imm_str)
     except ValueError:
-        raise InvalidArgumentError(f"Invalid immediate value: {imm_str}")
+        if imm_str in metadata['labels']:
+            imm = format(metadata['labels'][imm_str], '012b')
+        else:
+            raise InvalidArgumentError(f"Invalid immediate value: {imm_str}")
     
     # TODO: ensure imm is within valid range based on instruction type
     return format(imm & 0xFFF, '012b')  # Example: 12-bit immediate
