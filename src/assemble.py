@@ -1,8 +1,8 @@
 import re
 import sys
 
-from constants import opcode, pseudo, funct_3, funct_7
-from errors import *
+from src.constants import opcode, pseudo
+from src.errors import *
 
 def assemble(
         content: str
@@ -51,11 +51,7 @@ def assemble_line(
     labels = metadata['labels']
 
     # Operation-handling ----------------------------
-    match = re.search(r'\s*(\w+)\s+(.*)', line)
-    op, non_op = match.group(1), match.group(2)
-
-    if not match:
-        raise InvalidOperationError(f"Invalid operation in line: {line}")
+    op, non_op = parse_op(line)
 
     # Label-handling ----------------
     if op.endswith(':'):
@@ -66,6 +62,16 @@ def assemble_line(
 
     # Instruction-handling --------------------------
 
+
+def parse_op(
+    line: str
+) -> tuple[str, str]:
+    """Parses a line into operation and non-operation parts."""
+    line = line.strip()
+    match = re.search(r'\s*(\w+)\s+(.*)', line)
+    if not match:
+        raise MissingOperationError(f"Missing operation in line: {line}")
+    return match.group(1), match.group(2)
 
 if __name__ == "__main__":
     assemble(sys.argv[1])
