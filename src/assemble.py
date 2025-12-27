@@ -94,6 +94,8 @@ def get_args(
         if len(args) != 2:
             raise InvalidArgumentError(f"Invalid number of arguments for {opcode_type}-type instruction: {op} {non_op}")
 
+    # TODO: handling for labels and using metadata
+    
     # Modify for S-type and LI-type
     if opcode_type in ['S', 'LI']:
         # args: rs2, offset(rs1)
