@@ -51,14 +51,10 @@ def assemble_line(
     labels = metadata['labels']
 
     # Operation-handling ----------------------------
-    op, non_op = parse_op(line)
+    op, non_op = parse_op(line)            # Extract operation and non-operation parts
 
     # Label-handling ----------------
-    if op.endswith(':'):
-        labels[op[:-1]] = metadata['address']
-        return
-    else:
-        metadata['address'] += 4
+    handle_address_and_label(op, metadata) # Updates metadata with labels and address
 
     # Instruction-handling --------------------------
 
@@ -67,11 +63,24 @@ def parse_op(
     line: str
 ) -> tuple[str, str]:
     """Parses a line into operation and non-operation parts."""
+
     line = line.strip()
     match = re.search(r'\s*(\w+)\s+(.*)', line)
     if not match:
         raise MissingOperationError(f"Missing operation in line: {line}")
     return match.group(1), match.group(2)
+
+def handle_address_and_label(
+    op: str,
+    metadata: dict,
+) -> None:
+    """Handles label definitions in the assembly code."""
+    labels = metadata['labels']
+    if op.endswith(':'):
+        labels[op[:-1]] = metadata['address']
+    else:
+        metadata['address'] += 4
+    return
 
 if __name__ == "__main__":
     assemble(sys.argv[1])
