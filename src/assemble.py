@@ -57,7 +57,10 @@ def assemble_line(
     handle_address_and_label(op, metadata) # Updates metadata with labels and address
 
     # Instruction-handling --------------------------
+    opcode, opcode_type = get_opcode_and_type(op)
+    instruction = get_instruction(op, non_op, opcode, opcode_type, metadata)
 
+    return instruction
 
 def parse_op(
     line: str
@@ -68,7 +71,7 @@ def parse_op(
     match = re.search(r'\s*(\w+)\s+(.*)', line)
     if not match:
         raise MissingOperationError(f"Missing operation in line: {line}")
-    return match.group(1), match.group(2)
+    return match.group(1).lower(), match.group(2).lower()
 
 def handle_address_and_label(
     op: str,
