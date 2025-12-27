@@ -80,7 +80,7 @@ Op-codes: funct3 = `111`, funct7 = `0000000`
 |------------|------|--------|------|--------|
 | 12 bits    | 5 bits| 3 bits | 5 bits| 7 bits |
 
-- All I-type instructions share the same opcodes: `0010011` (for arithmetic immediate) and `0000011` (for load instructions)
+- All I-type instructions share the same opcodes: `0010011` (for arithmetic immediate), `0000011` (for load instructions) and `1100111` (for jalr)
 - funct3 values define the specific instruction.
 - slli, srli and srai use imm[4:0] as shamt (shift amount) and have specific funct7 values.
 
@@ -174,6 +174,12 @@ Format: `lhu rd, offset(rs1)`
 Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
 Op-codes: funct3 = `101`
 
+###### Sub-I type | jalr instruction:
+15. jalr
+Format: `jalr rd, rs1, offset`
+Description: `temp = pc + 4; pc = (rs1 + offset) & ~1; rd = temp`
+Op-codes: funct3 = `000`, opcode = `1100111`
+
 
 ### S-type:
 #### Instruction format:    
@@ -259,7 +265,7 @@ Opcode: `0010111`
 
 ### J-type:
 #### Instruction format:
-| imm[20-10:1-11-19:12] | rd   | opcode |
+| imm[20/10:1/11/19:12] | rd   | opcode |
 |-----------------------|------|--------|
 | 20 bits               | 5 bits| 7 bits |
 
