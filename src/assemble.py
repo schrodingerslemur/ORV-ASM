@@ -2,6 +2,7 @@ import re
 import sys
 
 from constants import opcode, pseudo, funct_3, funct_7
+from errors import *
 
 def assemble(
         content: str
@@ -14,36 +15,57 @@ def assemble(
     :return: assembled content in binary
     :rtype: str
     """
+    metadata = {
+        'labels': {},
+        'address': 0,
+    }
+
     assembled_lines = []
-    lines = content.splitlines()
-    address = 0
-    labels = {}
 
-    for idx in range(len(lines)):
-        line = lines[idx].strip()
-
+    for line in content.splitlines():
         # Comments or empty lines
         if line == '' or line.startswith('#'):
             continue 
+        
+        assembled_line = assemble_line(line, metadata)
 
-        # Operation-handling
-        match = re.search(r'\s*(\w+)\s+(.*)', line)
-        op = match.group(1)
-        non_op = match.group(2)
-
-        # Label-handling
-        if op.endswith(':'):
-            labels[op[:-1]] = address
-        else:
-            address += 4
-
-        # Instruction-handling
-        if op in pseudo:
-            for pseudo_inst in pseudo[op]:
-                # assembled_lines.append(pseudo_inst.replace('label', non_op))
-
+        if assembled_line:
+            assembled_lines.append(assembled_line)
 
     return '\n'.join(assembled_lines)
+
+def assemble_line(
+        line: str,
+        metadata: dict
+) -> str:
+    """
+    Assembles a single line of RISCV 32I ISA instruction into binary machine code.
+    
+    :param line: single line of .asm file content
+    :type line: str
+    :param metadata: dictionary containing labels and address
+    :type metadata: dict
+    :return: assembled line in binary
+    :rtype: str
+    """
+    labels = metadata['labels']
+
+    # Operation-handling ----------------------------
+    match = re.search(r'\s*(\w+)\s+(.*)', line)
+    op, non_op = match.group(1), match.group(2)
+
+    if not match:
+        raise InvalidOperationError(f"Invalid operation in line: {line}")
+
+    # Label-handling ----------------
+    if op.endswith(':'):
+        labels[op[:-1]] = metadata['address']
+        return
+    else:
+        metadata['address'] += 4
+
+    # Instruction-handling --------------------------
+
 
 if __name__ == "__main__":
     assemble(sys.argv[1])
