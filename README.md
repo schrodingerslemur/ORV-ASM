@@ -11,3 +11,9 @@ p.s. the word `OSTRICH` is purely for performative reasons.
 ```bash
 uv install
 ```
+
+## Testing
+Run
+```
+./test
+```
