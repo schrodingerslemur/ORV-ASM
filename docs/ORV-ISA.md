@@ -240,13 +240,22 @@ Description: `if (rs1 >= rs2) pc += offset` (unsigned)
 Op-codes: funct3 = `111`
 
 ### U-type:
+#### Instruction format:
+| imm[31:12] | rd   | opcode |
+|------------|------|--------|
+| 20 bits    | 5 bits| 7 bits |
+
+- Different opcodes
+
 1. lui
 Format: `lui rd, imm`
 Description: `rd = imm[31:12] << 12`
+Opcode: `0110111`
 
 2. auipc
 Format: `auipc rd, imm`
 Description: `rd = pc + (imm[31:12] << 12)`
+Opcode: `0010111`
 
 ### J-type:
 #### Instruction format:
@@ -260,9 +269,6 @@ Description: `rd = pc + (imm[31:12] << 12)`
 Format: `jal rd, offset`
 Description: `rd = pc + 4; pc += offset`
 
-2. jalr
-Format: `jalr rd, rs1, offset`
-Description: `temp = pc + 4; pc = (rs1 + offset) & ~1; rd = temp`
 
 ### Pseudo-instructions:
 1. nop
