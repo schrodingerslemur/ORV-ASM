@@ -95,7 +95,8 @@ def get_args(
             raise InvalidArgumentError(f"Invalid number of arguments for {opcode_type}-type instruction: {op} {non_op}")
 
     # TODO: handling for labels and using metadata
-    
+    # TODO: completely wrong, handle funct7, funct3, opcode properly
+
     # Modify for S-type and LI-type
     if opcode_type in ['S', 'LI']:
         # args: rs2, offset(rs1)
@@ -142,7 +143,7 @@ def get_register(
     """Converts a register string to its integer representation."""
     if not re.match(r'r[0-9]|1[0-9]|2[0-9]|3[0-1]', reg_str):
         raise InvalidRegisterError(f"Invalid register: {reg_str}")
-    return int(reg_str[1:])
+    return format(int(reg_str[1:]), '05b')
 
 def get_opcode_type(
     op: str

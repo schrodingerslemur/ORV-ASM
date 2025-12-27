@@ -57,9 +57,9 @@ def test_handle_address_and_label():
 
 def test_get_register():
     from src.assemble import get_register
-    assert get_register('r0') == 0
-    assert get_register('r15') == 15
-    assert get_register('r31') == 31
+    assert get_register('r0') == '00000'
+    assert get_register('r15') == '01111'
+    assert get_register('r31') == '11111'
     try:
         get_register('r32')
     except InvalidRegisterError as e:
@@ -77,10 +77,13 @@ def test_check_imm():
 def test_get_args():
     # TODO: fix
     from src.assemble import get_args
+    op = "addi"
     args_str = "r1, r2, 100"
-    args = get_args(args_str)
+    opcode_type = 'R'
+    metadata = {}
+    args = get_args(op, args_str, opcode_type, metadata)
     assert args == ['00001', '00010', '100']
 
     args_str = " r3 , r4 , -50 "
-    args = get_args(args_str)
+    args = get_args(op, args_str, opcode_type, metadata)
     assert args == ['00011', '00100', '-50']
