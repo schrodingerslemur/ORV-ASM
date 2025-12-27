@@ -73,7 +73,34 @@ def assemble_line(
         args = get_args(op, non_op, opcode_type, metadata)
         instruction = get_instruction(opcode_type, args)
         return instruction
-    
+
+def get_args(
+    op: str,
+    non_op: str,
+    opcode_type: str,
+    metadata: dict,
+) -> list[str]:
+    """Parses the all the parts into arguments based on opcode type."""
+    args = [arg.strip() for arg in non_op.split(',')]
+
+    if opcode_type in ['R', 'I', 'SI', 'JI', 'B']:
+        if len(args) != 3:
+            raise InvalidArgumentError(f"Invalid number of arguments for {opcode_type}-type instruction: {op} {non_op}")
+
+    elif opcode_type in ['LI', 'S']:
+        if len(args) != 2:
+            raise InvalidArgumentError(f"Invalid number of arguments for {opcode_type}-type instruction: {op} {non_op}")
+        
+    return args
+
+def get_register(
+    reg_str: str
+) -> int:
+    """Converts a register string to its integer representation."""
+    if not re.match(r'r[0-9]|1[0-9]|2[0-9]|3[0-1]', reg_str):
+        raise InvalidRegisterError(f"Invalid register: {reg_str}")
+    return int(reg_str[1:])
+
 def get_opcode_type(
     op: str
 ) -> str:
