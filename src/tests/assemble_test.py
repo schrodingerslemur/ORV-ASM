@@ -73,3 +73,14 @@ def test_check_imm():
         check_imm('abc')
     except InvalidArgumentError as e:
         assert isinstance(e, InvalidArgumentError)
+
+def test_get_args():
+    # TODO: fix
+    from src.assemble import get_args
+    args_str = "r1, r2, 100"
+    args = get_args(args_str)
+    assert args == ['00001', '00010', '100']
+
+    args_str = " r3 , r4 , -50 "
+    args = get_args(args_str)
+    assert args == ['00011', '00100', '-50']
