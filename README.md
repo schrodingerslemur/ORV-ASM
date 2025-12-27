@@ -6,3 +6,8 @@ Refer to [ORV-ISA.md](./docs/ORV-ISA.md) for the full set of instructions which 
 For reference, I am using the [RISC-V 32I ISA](https://msyksphinz-self.github.io/riscv-isadoc/html/rvi.html) as the basis for the ORV ISA.
 
 p.s. the word `OSTRICH` is purely for performative reasons.
+
+## Usage
+```bash
+uv install
+```
