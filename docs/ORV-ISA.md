@@ -177,28 +177,32 @@ Op-codes: funct3 = `101`
 
 ### S-type:
 #### Instruction format:    
-| imm[11:5] | rs2  | rs1  | funct3 | imm[4:0] | opcode |
+| offset[11:5] | rs2  | rs1  | funct3 | offset[4:0] | opcode |
 |------------|------|------|--------|----------|--------|
 | 7 bits     | 5 bits| 5 bits| 3 bits | 5 bits   | 7 bits |
 
 - All S-type instructions share the same opcodes: `0100011`
 - funct3 values define the specific instruction.
+- offset is formed by concatenating imm[11:5] and imm[4:0]
 
 1. sb
 Format: `sb rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[7:0]`
+Op-codes: funct3 = `000`
 
 2. sh
 Format: `sh rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[15:0]`
+Op-codes: funct3 = `001`
 
 3. sw
 Format: `sw rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[31:0]`
+Op-codes: funct3 = `010`
 
 ### B-type:
 #### Instruction format:
-| imm[12-10:5] | rs2  | rs1  | funct3 | imm[4:1-11] | opcode |
+| imm[12/10:5] | rs2  | rs1  | funct3 | imm[4:1/11] | opcode |
 |---------------|------|------|--------|--------------|--------|
 | 7 bits        | 5 bits| 5 bits| 3 bits | 5 bits       | 7 bits |
 
@@ -208,26 +212,32 @@ Description: `Mem[rs1 + offset] = rs2[31:0]`
 1. beq
 Format: `beq rs1, rs2, offset`
 Description: `if (rs1 == rs2) pc += offset`
+Op-codes: funct3 = `000`
 
 2. bne
 Format: `bne rs1, rs2, offset`
 Description: `if (rs1 != rs2) pc += offset`
+Op-codes: funct3 = `001`
 
 3. blt
 Format: `blt rs1, rs2, offset`
 Description: `if (rs1 < rs2) pc += offset`
+Op-codes: funct3 = `100`
 
 4. bge
 Format: `bge rs1, rs2, offset`
 Description: `if (rs1 >= rs2) pc += offset`
+Op-codes: funct3 = `101`
 
 5. bltu
 Format: `bltu rs1, rs2, offset`
 Description: `if (rs1 < rs2) pc += offset` (unsigned)
+Op-codes: funct3 = `110`
 
 6. bgeu
 Format: `bgeu rs1, rs2, offset`
 Description: `if (rs1 >= rs2) pc += offset` (unsigned)
+Op-codes: funct3 = `111`
 
 ### U-type:
 1. lui
