@@ -80,7 +80,7 @@ Op-codes: funct3 = `111`, funct7 = `0000000`
 |------------|------|--------|------|--------|
 | 12 bits    | 5 bits| 3 bits | 5 bits| 7 bits |
 
-- All I-type instructions share the same opcodes: `0010011` 
+- All I-type instructions share the same opcodes: `0010011` (for arithmetic immediate) and `0000011` (for load instructions)
 - funct3 values define the specific instruction.
 - slli, srli and srai use imm[4:0] as shamt (shift amount) and have specific funct7 values.
 
@@ -114,8 +114,15 @@ Format: `andi rd, rs1, imm`
 Description: `rd = rs1 & imm`
 Op-codes: funct3 = `111`
 
-Shamt instructions:
-(shamt is the shift amount, encoded in imm[4:0])
+##### Sub-I type | Shamt instructions:
+
+###### Format:
+| funct7 | shamt | rs1  | funct3 | rd   | opcode |
+|--------|-------|------|--------|------|--------|
+| 7 bits | 5 bits| 5 bits| 3 bits | 5 bits| 7 bits |
+
+- shamt is the shift amount, encoded in imm[4:0]
+- opcode: `0010011`
 
 7. slli
 Format: `slli rd, rs1, shamt`
@@ -131,6 +138,42 @@ Op-codes: funct3 = `101`, funct7 = `0000000`
 Format: `srai rd, rs1, shamt`
 Description: `rd = rs1 >> shamt (arithmetic)`
 Op-codes: funct3 = `101`, funct7 = `0100000`
+
+##### Sub-I type | Load instructions:
+
+###### Format:
+| offset | rs1  | funct3 | rd   | opcode |
+|------------|------|--------|------|--------|
+| 12 bits    | 5 bits| 3 bits | 5 bits| 7 bits |
+
+- offset is the immediate value for memory addressing, encoded in imm[11:0]
+- opcode: `0000011`
+
+10. lb
+Format: `lb rd, offset(rs1)`
+Description: `rd = sign-extend(Mem[rs1 + offset][7:0])`
+Op-codes: funct3 = `000`
+
+11. lh
+Format: `lh rd, offset(rs1)`
+Description: `rd = sign-extend(Mem[rs1 + offset][15:0])`
+Op-codes: funct3 = `001`
+
+12. lw
+Format: `lw rd, offset(rs1)`
+Description: `rd = Mem[rs1 + offset][31:0]`
+Op-codes: funct3 = `010`
+
+13. lbu
+Format: `lbu rd, offset(rs1)`
+Description: `rd = zero-extend(Mem[rs1 + offset][7:0])`
+Op-codes: funct3 = `100`
+
+14. lhu
+Format: `lhu rd, offset(rs1)`
+Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
+Op-codes: funct3 = `101`
+
 
 ### S-type:
 #### Instruction format:    
@@ -152,26 +195,6 @@ Description: `Mem[rs1 + offset] = rs2[15:0]`
 3. sw
 Format: `sw rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[31:0]`
-
-4. lb
-Format: `lb rd, offset(rs1)`
-Description: `rd = sign-extend(Mem[rs1 + offset][7:0])`
-
-5. lh
-Format: `lh rd, offset(rs1)`
-Description: `rd = sign-extend(Mem[rs1 + offset][15:0])`
-
-6. lw
-Format: `lw rd, offset(rs1)`
-Description: `rd = Mem[rs1 + offset][31:0]`
-
-7. lbu
-Format: `lbu rd, offset(rs1)`
-Description: `rd = zero-extend(Mem[rs1 + offset][7:0])`
-
-8. lhu
-Format: `lhu rd, offset(rs1)`
-Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
 
 ### B-type:
 #### Instruction format:
