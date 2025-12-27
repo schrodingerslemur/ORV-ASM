@@ -16,6 +16,14 @@ Based on the base instructions on RISCV-32I
 3. .dw
 
 ### R-type:
+#### Instruction format:
+| funct7 | rs2  | rs1  | funct3 | rd   | opcode |
+|--------|------|------|--------|------|--------|
+| 7 bits | 5 bits| 5 bits| 3 bits | 5 bits| 7 bits |
+
+- All R-type instructions share the same opcodes: `0110011`
+- funct3 and funct7 values define the specific instruction.
+
 1. add
 Format: `add rd, rs1, rs2`
 Description: `rd = rs1 + rs2`
@@ -57,6 +65,14 @@ Format: `and rd, rs1, rs2`
 Description: `rd = rs1 & rs2`
 
 ### I-type:
+#### Instruction format:
+| imm[11:0] | rs1  | funct3 | rd   | opcode |
+|------------|------|--------|------|--------|
+| 12 bits    | 5 bits| 3 bits | 5 bits| 7 bits |
+
+- All I-type instructions share the same opcodes: `0010011`
+- funct3 values define the specific instruction.
+
 1. lui
 Format: `lui rd, imm`
 Description: `rd = imm[31:12] << 12`
@@ -98,6 +114,14 @@ Format: `srai rd, rs1, shamt`
 Description: `rd = rs1 >> shamt (arithmetic)`
 
 ### S-type:
+#### Instruction format:    
+| imm[11:5] | rs2  | rs1  | funct3 | imm[4:0] | opcode |
+|------------|------|------|--------|----------|--------|
+| 7 bits     | 5 bits| 5 bits| 3 bits | 5 bits   | 7 bits |
+
+- All S-type instructions share the same opcodes: `0100011`
+- funct3 values define the specific instruction.
+
 1. sb
 Format: `sb rs2, offset(rs1)`
 Description: `Mem[rs1 + offset] = rs2[7:0]`
@@ -131,6 +155,14 @@ Format: `lhu rd, offset(rs1)`
 Description: `rd = zero-extend(Mem[rs1 + offset][15:0])`
 
 ### B-type:
+#### Instruction format:
+| imm[12-10:5] | rs2  | rs1  | funct3 | imm[4:1-11] | opcode |
+|---------------|------|------|--------|--------------|--------|
+| 7 bits        | 5 bits| 5 bits| 3 bits | 5 bits       | 7 bits |
+
+- All B-type instructions share the same opcodes: `1100011`
+- funct3 values define the specific instruction.
+
 1. beq
 Format: `beq rs1, rs2, offset`
 Description: `if (rs1 == rs2) pc += offset`
@@ -165,6 +197,13 @@ Format: `auipc rd, imm`
 Description: `rd = pc + (imm[31:12] << 12)`
 
 ### J-type:
+#### Instruction format:
+| imm[20-10:1-11-19:12] | rd   | opcode |
+|-----------------------|------|--------|
+| 20 bits               | 5 bits| 7 bits |
+
+- All J-type instructions share the same opcodes: `1101111`
+
 1. jal
 Format: `jal rd, offset`
 Description: `rd = pc + 4; pc += offset`
