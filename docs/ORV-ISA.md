@@ -80,48 +80,57 @@ Op-codes: funct3 = `111`, funct7 = `0000000`
 |------------|------|--------|------|--------|
 | 12 bits    | 5 bits| 3 bits | 5 bits| 7 bits |
 
-- All I-type instructions share the same opcodes: `0010011`
+- All I-type instructions share the same opcodes: `0010011` 
 - funct3 values define the specific instruction.
+- slli, srli and srai use imm[4:0] as shamt (shift amount) and have specific funct7 values.
 
-1. lui
-Format: `lui rd, imm`
-Description: `rd = imm[31:12] << 12`
-
-2. addi
+1. addi
 Format: `addi rd, rs1, imm`
 Description: `rd = rs1 + imm`
+Op-codes: funct3 = `000`
 
-3. slti
+2. slti
 Format: `slti rd, rs1, imm`
 Description: `rd = rs1 < imm ? 1 : 0`
+Op-codes: funct3 = `010`
 
-4. sltiu
+3. sltiu
 Format: `sltiu rd, rs1, imm`
 Description: `rd = rs1 < imm (unsigned) ? 1 : 0`
+Op-codes: funct3 = `011`
 
-5. xori
+4. xori
 Format: `xori rd, rs1, imm`
 Description: `rd = rs1 ^ imm`
+Op-codes: funct3 = `100`
 
-6. ori
+5. ori
 Format: `ori rd, rs1, imm`
 Description: `rd = rs1 | imm`
+Op-codes: funct3 = `110`
 
-7. andi
+6. andi
 Format: `andi rd, rs1, imm`
 Description: `rd = rs1 & imm`
+Op-codes: funct3 = `111`
 
-8. slli
+7. slli
 Format: `slli rd, rs1, shamt`
 Description: `rd = rs1 << shamt`
+Op-codes: funct3 = `001`, funct7 = `0000000`
+(shamt is the shift amount, encoded in imm[4:0])
 
-9. srli 
+8. srli 
 Format: `srli rd, rs1, shamt`
 Description: `rd = rs1 >> shamt (logical)`
+Op-codes: funct3 = `101`, funct7 = `0000000`
+(shamt is the shift amount, encoded in imm[4:0])
 
-10. srai 
+9. srai 
 Format: `srai rd, rs1, shamt`
 Description: `rd = rs1 >> shamt (arithmetic)`
+Op-codes: funct3 = `101`, funct7 = `0100000`
+(shamt is the shift amount, encoded in imm[4:0])
 
 ### S-type:
 #### Instruction format:    
