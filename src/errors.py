@@ -13,3 +13,7 @@ class InvalidOperationError(AssemblyError):
 class InvalidRegisterError(AssemblyError):
     """Exception raised for invalid register usage."""
     pass
+
+class InvalidArgumentError(AssemblyError):
+    """Exception raised for invalid arguments."""
+    pass
