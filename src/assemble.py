@@ -82,7 +82,7 @@ def get_instruction(
     args: list[str],    
 ) -> str:
     """Generates the binary instruction based on opcode type and arguments."""
-    # TODO: fix imm parsing
+    # fix imm parsing (resolved)
     if opcode_type == 'R':
         funct7 = opcode[op][2]
         funct3 = opcode[op][3]
