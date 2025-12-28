@@ -86,11 +86,11 @@ def test_get_args():
     from src.assemble import get_args
     op = "addi"
     args_str = "r1, r2, 100"
-    opcode_type = 'R'
+    opcode_type = 'I'
     metadata = {}
     args = get_args(op, args_str, opcode_type, metadata)
-    assert args == ['0010011', '00001', '00010', '00100']
+    assert args == ['0010011', '00001', '00010', '000001100100']
 
     args_str = " r3 , r4 , -50 "
     args = get_args(op, args_str, opcode_type, metadata)
-    assert args == ['0010011', '00011', '00100', '-50']
+    assert args == ['0010011', '00011', '00100', '111111001110']

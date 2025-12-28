@@ -94,8 +94,8 @@ def get_args(
         if len(args) != 2:
             raise InvalidArgumentError(f"Invalid number of arguments for {opcode_type}-type instruction: {op} {non_op}")
 
-    # TODO: handling for labels and using metadata
-    # TODO: completely wrong, handle funct7, funct3, opcode properly
+    # handling for labels and using metadata (resolved using get_imm)
+    # completely wrong, handle funct7, funct3, opcode properly (resolved, do this in get_instruction)
 
     # Modify for S-type and LI-type
     if opcode_type in ['S', 'LI']:
@@ -107,11 +107,11 @@ def get_args(
         rs1 = match.group(2)
         args = [args[0], rs1, offset]  # rs2, rs1, offset
 
-        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2])]
+        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata)]
     
     elif opcode_type in ['J']:
         # args: rd, label
-        return [opcode[op][0]] + [get_register(args[0]), args[1]]
+        return [opcode[op][0]] + [get_register(args[0]), get_imm(args[1], metadata)]
     
     elif opcode_type in ['R']:
         # args: rd, rs1, rs2
@@ -119,7 +119,7 @@ def get_args(
 
     elif opcode_type in ['I', 'SI', 'JI']:
         # args: rd, rs1, imm
-        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2])]
+        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata)]
     
     else:
         raise InvalidOperationError(f"Invalid opcode type: {opcode_type}")
