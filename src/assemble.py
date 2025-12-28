@@ -130,6 +130,7 @@ def get_imm(
     metadata: dict
 ) -> str:
     """Validates an immediate value"""
+    # TODO: handle different bit-widths based on instruction type
     try:
         imm = int(imm_str)
     except ValueError:
