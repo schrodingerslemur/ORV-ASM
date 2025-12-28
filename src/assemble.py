@@ -92,12 +92,14 @@ def get_instruction(
     elif opcode_type == 'I':
         funct3 = opcode[op][2]
         rd, rs1, imm = args[1], args[2], args[3]
+        assert len(imm) == 12, "Immediate must be 12 bits for I-type"
         instruction = imm + rs1 + funct3 + rd + opcode[op][0]
     
     elif opcode_type == 'SI':
         funct7 = opcode[op][2]
         funct3 = opcode[op][3]
         rd, rs1, imm = args[1], args[2], args[3][-5:] # shamt
+        assert len(imm) == 5, "Shift amount must be 5 bits for SI-type"
         instruction = funct7 + imm + rs1 + funct3 + rd + opcode[op][0]
     
     elif opcode_type in ['LI', 'JI']: # add JI-type too (resolved)

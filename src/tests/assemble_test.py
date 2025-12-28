@@ -140,3 +140,25 @@ def test_add_invalid():
         assemble_line(line, metadata)
     except InvalidArgumentError as e:
         assert isinstance(e, InvalidArgumentError)
+
+def test_addi():
+    from src.assemble import assemble_line
+    metadata = {
+        'labels': {},
+        'address': 0,
+    }
+    line = "addi r1, r2, 100"
+    instruction = assemble_line(line, metadata)
+    assert instruction == '000001100100' + '00010' + '000' + '00001' + '0010011'  # imm + rs1 + funct3 + rd + opcode
+
+def test_addi_invalid_imm():
+    from src.assemble import assemble_line
+    metadata = {
+        'labels': {},
+        'address': 0,
+    }
+    line = "addi r1, r2, abc"  # Invalid immediate
+    try:
+        assemble_line(line, metadata)
+    except InvalidArgumentError as e:
+        assert isinstance(e, InvalidArgumentError)
