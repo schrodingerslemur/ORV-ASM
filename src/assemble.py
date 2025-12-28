@@ -107,11 +107,11 @@ def get_args(
         rs1 = match.group(2)
         args = [args[0], rs1, offset]  # rs2, rs1, offset
 
-        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata)]
+        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata, type=opcode_type)]
     
     elif opcode_type in ['J']:
         # args: rd, label
-        return [opcode[op][0]] + [get_register(args[0]), get_imm(args[1], metadata)]
+        return [opcode[op][0]] + [get_register(args[0]), get_imm(args[1], metadata, type=opcode_type)]
     
     elif opcode_type in ['R']:
         # args: rd, rs1, rs2
@@ -119,7 +119,7 @@ def get_args(
 
     elif opcode_type in ['I', 'SI', 'JI']:
         # args: rd, rs1, imm
-        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata)]
+        return [opcode[op][0]] + [get_register(args[0]), get_register(args[1]), get_imm(args[2], metadata, type=opcode_type)]
     
     else:
         raise InvalidOperationError(f"Invalid opcode type: {opcode_type}")
@@ -127,10 +127,12 @@ def get_args(
 
 def get_imm(
     imm_str: str,
-    metadata: dict
+    metadata: dict,
+    type: str = 'I'
 ) -> str:
     """Validates an immediate value"""
     # TODO: handle different bit-widths based on instruction type
+    # I-type: 12 bits, S-type: 12 bits, B-type: 12 bits, U-type: 20 bits, J-type: 20 bits
     try:
         imm = int(imm_str)
     except ValueError:
@@ -139,8 +141,16 @@ def get_imm(
         else:
             raise InvalidArgumentError(f"Invalid immediate value: {imm_str}")
     
-    # TODO: ensure imm is within valid range based on instruction type
-    return format(imm & 0xFFF, '012b')  # Example: 12-bit immediate
+    if type in ['I', 'S', 'B', 'LI', 'SI']: # handle splitting in two parts in get_instruction
+        # 12-bit immediate
+        imm = imm & 0xFFF
+        return format(imm, '012b')
+    elif type in ['U', 'J']:
+        # 20-bit immediate
+        imm = imm & 0xFFFFF
+        return format(imm, '020b')
+    else:
+        raise InvalidOperationError(f"Invalid immediate type: {type}")
 
 def get_register(
     reg_str: str
