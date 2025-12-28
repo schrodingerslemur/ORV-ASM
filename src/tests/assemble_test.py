@@ -82,7 +82,6 @@ def test_get_imm():
         assert isinstance(e, InvalidArgumentError)
 
 def test_get_args():
-    # TODO: fix
     from src.assemble import get_args
     op = "addi"
     args_str = "r1, r2, 100"
