@@ -127,7 +127,7 @@ def get_args(
 
 def get_imm(
     imm_str: str,
-    metadata: dict = {}
+    metadata: dict
 ) -> str:
     """Validates an immediate value"""
     try:

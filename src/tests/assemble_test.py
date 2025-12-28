@@ -75,8 +75,9 @@ def test_get_imm():
     assert get_imm('label1', metadata) == '000001100100'
     assert get_imm('100', metadata) == '000001100100'
     assert get_imm('-50', metadata) == '111111001110'
+
     try:
-        get_imm('abc')
+        get_imm('abc', metadata)
     except InvalidArgumentError as e:
         assert isinstance(e, InvalidArgumentError)
 
