@@ -1,7 +1,7 @@
 [project]
 name = "orv-asm"
 version = "0.1.0"
-description = "Add your description here"
+description = "RISC-V 32I Assembler"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
