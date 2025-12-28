@@ -118,3 +118,25 @@ def test_get_args_invalid():
         get_args(op, args_str, opcode_type, metadata)
     except InvalidArgumentError as e:
         assert isinstance(e, InvalidArgumentError)
+
+def test_add():
+    from src.assemble import assemble_line
+    metadata = {
+        'labels': {},
+        'address': 0,
+    }
+    line = "add r1, r2, r3"
+    instruction = assemble_line(line, metadata)
+    assert instruction == '0000000' + '00011' + '00010' + '000' + '00001' + '0110011'  # funct7 + rs2 + rs1 + funct3 + rd + opcode
+
+def test_add_invalid():
+    from src.assemble import assemble_line
+    metadata = {
+        'labels': {},
+        'address': 0,
+    }
+    line = "add r1, r2"  # Missing one register
+    try:
+        assemble_line(line, metadata)
+    except InvalidArgumentError as e:
+        assert isinstance(e, InvalidArgumentError)
