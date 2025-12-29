@@ -162,3 +162,41 @@ def test_addi_invalid_imm():
         assemble_line(line, metadata)
     except InvalidArgumentError as e:
         assert isinstance(e, InvalidArgumentError)
+
+def test_get_pseudo_args():
+    from src.assemble import get_pseudo_args
+    metadata = {}
+    op = "mv"
+    non_op = "r1, r2"
+    args = get_pseudo_args(op, non_op, metadata)
+    assert args == ['00001', '00010']
+
+    op = "li"
+    non_op = "r3, 1000"
+    args = get_pseudo_args(op, non_op, metadata)
+    assert args == ['00011', '001111101000']
+
+def test_replace_args_in_pseudo():
+    from src.assemble import replace_args_in_pseudo
+    pseudo_inst = "addi x0, x0, IMM"
+    args = ['00001', '001111101000']  # rd = r1, imm = 1000
+    replaced_inst = replace_args_in_pseudo(pseudo_inst, args)
+    assert replaced_inst == "addi r1, r1, 1000"
+
+# def test_pseudo_mv():
+#     from src.assemble import assemble_line
+#     metadata = {
+#         'labels': {},
+#         'address': 0,
+#     }
+#     line = "mv r1, r2"
+#     instructions = assemble_line(line, metadata)
+#     assert len(instructions) == 1
+#     assert instructions[0] == '0000000' + '00010' + '00000' + '000' + '00001' + '0010011'  # addi r1, r2, 0
+
+
+# get_args non_op -> ['r1', 'r2', '100'] etc
+# get_instruction(op, opcode_type, args) -> binary instruction
+
+# get_pseudo_args non_op -> ['r1', 'r2'] etc
+# replace_args_in_pseudo 'addi x0, x1, 0' -> 'addi r1, r2, 0'

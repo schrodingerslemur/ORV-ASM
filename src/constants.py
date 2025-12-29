@@ -1,11 +1,9 @@
 pseudo = {
-    'nop': ['addi x0, x0, 0'],
-    'mv': ['addi x0, x0, 0'],
-    'li': ['addi x0, x0, IMM'],  # IMM to be replaced during assembly
-    'la': ['lui x0, %hi(label)', 'addi x0, x0, %lo(label)'],
-    'not': ['xori x0, x0, -1'],
-    'neg': ['sub x0, x0, x0'],
-    'negw': ['subw x0, x0, x0'],
+    'nop': ['addi r0, r0, 0'], # nop
+    'mv': ['addi x1, x0, 0'],  # mv rd, rs -> addi rd, rs, 0
+    'li': ['addi x0, x0, IMM'],  # li rd, imm -> addi rd, x0, imm
+    'not': ['xori x0, x0, -1'], # not rd -> xori rd, rd, -1
+    'neg': ['sub x0, x0, x0'],  # neg rd -> sub rd, x0, rd
 }
 
 opcode = {
