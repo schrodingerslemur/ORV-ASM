@@ -70,9 +70,6 @@ def assemble_line(
     if op.endswith(':'):
         return None  # Label-only line, no instruction to assemble
 
-    # Label-handling ----------------
-    # handle_address_and_label(op, metadata) # Updates metadata with labels and address
-
     # Instruction-handling --------------------------
     opcode_type = get_opcode_type(op)
 
