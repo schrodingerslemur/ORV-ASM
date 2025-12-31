@@ -202,9 +202,26 @@ def test_pseudo_mv():
     assert len(instructions) == 1
     assert instructions[0] == '0000000' + '00000' + '00010' + '000' + '00001' + '0010011'  # addi r1, r2, 0
 
-# 000000000010 00000 000 00001 0010011
-# get_args non_op -> ['r1', 'r2', '100'] etc
-# get_instruction(op, opcode_type, args) -> binary instruction
+def test_instructions():
+    from src.assemble import assemble
+    instructions = \
+    """# Example ORV Assembly File
+    start:
+        addi r1, r0, 10      # Load immediate value 10 into r1
+        addi r2, r0, 20      # Load immediate value 20 into r2
+        add r3, r1, r2       # Add r1 and r2, store result in r3
+        beq r3, r0, end     # If r3 is zero, branch to end
+        sub r4, r2, r1       # Subtract r1 from r2, store result in r4
+    end:
+        nop                   # No operation"""
 
-# get_pseudo_args non_op -> ['r1', 'r2'] etc
-# replace_args_in_pseudo 'addi x0, x1, 0' -> 'addi r1, r2, 0'
+    assembled = assemble(instructions)
+
+    assert assembled == \
+"""00000000101000000000000010010011
+00000001010000000000000100010011
+00000000001000001000000110110011
+00000000000000011000101001100011
+01000000000100010000001000110011
+00000000000000000000000000010011"""
+
