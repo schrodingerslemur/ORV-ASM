@@ -1,13 +1,14 @@
 # OSTRICH Assembler for RISC-V ISA
 Building... 
 
-[Issues](https://github.com/schrodingerslemur/ORV-ASM/issues/1)
-
 Refer to [ORV-ISA.md](./docs/ORV-ISA.md) for the full set of instructions which ORV supports and [ORV-ASM.md](./docs/ORV-ASM.md) on how to structure the assembly file.
 
 For reference, I am using the [RISC-V 32I ISA](https://msyksphinz-self.github.io/riscv-isadoc/html/rvi.html) as the basis for the ORV ISA.
 
 p.s. the word `OSTRICH` is purely for performative reasons.
+
+## Issues
+[Issue #1: Memory addressing](https://github.com/schrodingerslemur/ORV-ASM/issues/1)
 
 ## Usage
 1. Clone the repository
